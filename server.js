@@ -6,6 +6,8 @@ const morgan = require("morgan");
 const cookieParser = require("cookie-parser");
 const rateLimit = require("express-rate-limit");
 const { errorHandler } = require("./middlewares/errorMiddleware");
+const authRouter = require("./routes/auth");
+const adminUsersRouter = require("./routes/adminUsers");
 const { connectDb } = require("./config/db");
 
 const app = express();
@@ -36,8 +38,8 @@ const limiter = rateLimit({
 app.use(limiter);
 
 // ===== Routes =====
-// app.use("/api/users", userRouter);
-
+app.use("/api/users", authRouter);
+app.use("/api/admin", adminUsersRouter);
 
 // ===== Test Root Route =====
 app.get("/", (req, res) => {
