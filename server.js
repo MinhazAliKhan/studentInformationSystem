@@ -5,6 +5,8 @@ const helmet = require("helmet");
 const morgan = require("morgan");
 const cookieParser = require("cookie-parser");
 const rateLimit = require("express-rate-limit");
+const { errorHandler } = require("./middlewares/errorMiddleware");
+const { connectDb } = require("./config/db");
 
 const app = express();
 
@@ -45,13 +47,13 @@ app.get("/", (req, res) => {
 
 // ===== Connect DB and Start Server =====
 const PORT = process.env.PORT || 5000;
-// connectDb();
+connectDb();
 
 app.listen(PORT, () => {
   console.log(`Server running on http://localhost:${PORT}`);
 });
 
 // ===== Error Handler =====
-// app.use(errorHandler); 
+app.use(errorHandler); 
 
 
